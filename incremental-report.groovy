@@ -19,23 +19,29 @@ cli.jiraUrl(args:1, argName:'jiraUrl', 'jira url')
 cli.user(args:1, argName:'user', 'use name')
 cli.pwd(args:1, argName:'pwd', 'password')
 cli.proj(args:1, argName:'proj', 'project name')
-cli.fromDate(args:1, argName:'fromDate', 'from date')
-cli.toDate(args:1, argName:'toDate', 'to date')
+cli.workLogFromDate(args:1, argName:'fromDate', 'work logs from date')
+cli.workLogToDate(args:1, argName:'toDate', 'work logs  to date')
+cli.ticketsFromDate(args:1, argName:'ticketsFromDate', 'tickets from date')
+cli.ticketsToDate(args:1, argName:'ticketsToDate', 'tickets to date')
+
 
 def options = cli.parse(args)
 
 assert options
-assert options.jiraUrl && options.user && options.pwd && options.proj && options.fromDate
+assert options.jiraUrl && options.user && options.pwd && options.proj && options.workLogFromDate && options.workLogToDate && options.ticketsFromDate && options.ticketsToDate
+
 
 def URL = options.jiraUrl
 def USERNAME = options.user
 def PASSWORD = options.pwd
 def PROJ = options.proj
-def fromDate = options.fromDate
-def toDate = options.toDate
+def workLogFromDate = options.workLogFromDate
+def workLogToDate = options.workLogToDate
+def ticketsFromDate = options.ticketsFromDate
+def ticketsToDate = options.ticketsToDate
 
-def fromDateAsDate = df.parse(fromDate);
-def toDateAsDate = df.parse(toDate);
+def fromDateAsDate = df.parse(workLogFromDate);
+def toDateAsDate = df.parse(workLogToDate);
 
 // Connect to JIRA
 final jiraRestClientFactory = new AsynchronousJiraRestClientFactory();
@@ -47,7 +53,7 @@ JiraRestClient jiraRestClient = jiraRestClientFactory
 
 
 Set<String> fields = ["worklog", "summary", "issuetype", "created", "updated", "project", "status"].toSet()
-def jql = "project = \"$PROJ\" AND updatedDate  >= \"$fromDate\"  AND updatedDate <= \"$toDate\" order by updatedDate DESC";
+def jql = "project = \"$PROJ\" AND updatedDate  >= \"$ticketsFromDate\"  AND updatedDate <= \"$ticketsToDate\" order by updatedDate DESC";
 println jql
 result = jiraRestClient.searchClient.searchJql(jql, 500, 0, fields).get()
 
