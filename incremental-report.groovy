@@ -35,6 +35,7 @@ def fromDate = options.fromDate
 def toDate = options.toDate
 
 def fromDateAsDate = df.parse(fromDate);
+def toDateAsDate = df.parse(toDate);
 
 // Connect to JIRA
 final jiraRestClientFactory = new AsynchronousJiraRestClientFactory();
@@ -46,15 +47,18 @@ JiraRestClient jiraRestClient = jiraRestClientFactory
 
 
 Set<String> fields = ["worklog", "summary", "issuetype", "created", "updated", "project", "status"].toSet()
-result = jiraRestClient.searchClient.searchJql("project = \"$PROJ\" AND updatedDate  >= \"$fromDate\"  AND updatedDate <=\"$toDate\" ", 100, 0, fields).get()
+def jql = "project = \"$PROJ\" AND updatedDate  >= \"$fromDate\"  AND updatedDate <= \"$toDate\" order by updatedDate DESC";
+println jql
+result = jiraRestClient.searchClient.searchJql(jql, 500, 0, fields).get()
 
 userWorkLog = [:]
-result.getIssues().findAll({ it.worklogs.size() > 0 }).each { issue ->
+result.getIssues().findAll({ it.worklogs.size() > 0 }).sort { it.updateDate.toDate() } .reverse(true) .each { issue ->
     issue.worklogs.each {
-        if (it.startDate.toDate() >= fromDateAsDate) {
+        if ((it.startDate.toDate() >= fromDateAsDate) && (it.startDate.toDate() <= toDateAsDate )) {
             def userItems = userWorkLog.get(it.author.displayName, [])
-            userItems.add it;
-            println "$issue.key \t ${(it.minutesSpent / 60).toFloat().round(2)} \t $it.author.displayName  \t $issue.summary \t ${it.comment ?: '<NO-COMMENT>'}  \t $it.startDate"
+            def item = [issue:issue, worklog: it];
+            userItems.add(item);
+            println "$issue.key \t ${(it.minutesSpent / 60).toFloat().round(2)} \t $it.author.displayName  \t $issue.summary \t ${it.comment ?: '<NO-COMMENT>'}  \t ${df.format(it.startDate.toDate())}"
         }
     }
 }
@@ -62,7 +66,19 @@ result.getIssues().findAll({ it.worklogs.size() > 0 }).each { issue ->
 //summary of time of the last day
 println "work logs summary"
 userWorkLog.each {
-    println "$it.key \t ${(it.value*.minutesSpent.sum()/60).toFloat().round(2)}"
+    println "$it.key \t ${(it.value*.worklog*.minutesSpent.sum()/60).toFloat().round(2)}"
+}
+
+println("Work Logs Per-User")
+userWorkLog.each {
+    def items = it.value
+    println "--- $it.key ---"
+    items.sort { it.worklog.startDate.toDate() }.each { item ->
+        def issue = item.issue
+        def worklog = item.worklog
+        println "$it.key \t ${issue.key} \t ${issue.summary} \t ${((worklog.minutesSpent / 60).toFloat().round(2))} \t ${worklog.comment ?: '<NO-COMMENT>'}"
+    }
+
 }
 
 // Close connection
