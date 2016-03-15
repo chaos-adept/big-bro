@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat
 
 
 def df = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+def repDf = new SimpleDateFormat("HH:mm yy/MM/dd");
 
 def cli = new CliBuilder(usage:'')
 cli.jiraUrl(args:1, argName:'jiraUrl', 'jira url')
@@ -64,7 +65,7 @@ result.getIssues().findAll({ it.worklogs.size() > 0 }).sort { it.updateDate.toDa
             def userItems = userWorkLog.get(it.author.displayName, [])
             def item = [issue:issue, worklog: it];
             userItems.add(item);
-            println "$issue.key \t ${(it.minutesSpent / 60).toFloat().round(2)} \t $it.author.displayName  \t $issue.summary \t ${it.comment ?: '<NO-COMMENT>'}  \t ${df.format(it.startDate.toDate())}"
+            //println "$issue.key \t ${(it.minutesSpent / 60).toFloat().round(2)} \t $it.author.displayName  \t $issue.summary \t ${it.comment ?: '<NO-COMMENT>'}  \t ${df.format(it.startDate.toDate())}"
         }
     }
 }
@@ -82,7 +83,7 @@ userWorkLog.each {
     items.sort { it.worklog.startDate.toDate() }.each { item ->
         def issue = item.issue
         def worklog = item.worklog
-        println "$it.key \t ${issue.key} \t ${issue.summary} \t ${((worklog.minutesSpent / 60).toFloat().round(2))} \t ${worklog.comment ?: '<NO-COMMENT>'}"
+        println "$it.key \t ${issue.key} \t ${repDf.format(worklog.startDate.toDate())} \t ${((worklog.minutesSpent / 60).toFloat().round(2))} \t ${issue.summary} \t ${worklog.comment ?: '<NO-COMMENT>'} "
     }
 
 }
