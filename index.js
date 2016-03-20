@@ -1,52 +1,30 @@
 //thanks to https://github.com/B-Stefan/node-jira-worklog-export
+const moment = require('moment');
+const Promise = require('bluebird');
+const argvToRepDate = require('./lib/utils').argvToRepDate;
+const argv = require('optimist').argv;
+const _ = require('lodash');
+const generateReport = require('./lib/generate-report');
+var startDate, endDate;
 
-var _ = require('lodash');
-var Promise = require('bluebird');
-var JiraApi = require('jira').JiraApi;
-
-var defaultConfigName = './config.default.js';
-var localConfigName = './config.local.js';
-
-var defaultConfig = require(defaultConfigName);
-
-var localConfig;
-try {
-    var moduleConfig = require(localConfigName);
-    localConfig = _.extend(defaultConfig, moduleConfig);
-} catch(e) {
-    console.error(`${localConfigName} is not found, please create it with custom parameters from ${defaultConfigName}`);
-    process.exit(e.code);
+function writeReport(dates) {
+    generateReport(dates).then( (result) => {
+        console.dir(result.summary);
+        var details = _.flatten(_.map(result.details, (items, author) => (
+                items.map( (item) => ({ author: author, comment: item.comment, issueKey: item.issue.key })) )));
+        console.dir(details);
+    });
 }
 
-var options = localConfig;
+if (argv.day) {
+    startDate = argvToRepDate(argv.day);
+    endDate = startDate.clone();
+    endDate.add(1, 'd');
+    writeReport({startDate, startDate});
+} else if (argv.startDate && argv.endDate) {
+    startDate = argvToRepDate(argv.startDate);
+    endDate = argvToRepDate(argv.endDate);
+    endDate.add(1, 'd');
+    writeReport({startDate, endDate});
+}
 
-var jira = new JiraApi(
-        options.protocol, options.host, options.port,
-        options.userName, options.password, options.apiVersion, options.verbose);
-
-var searchOptions = {
-    maxResults: options.maxIssueResults
-};
-
-var query = `project = "${options.projectKey}" order by updatedDate desc`;
-
-var getWorkLogPromise = Promise.promisify(jira.getWorklog.bind(jira));
-
-jira.searchJira(query, searchOptions, function (err, data) {
-    if (err) {
-        throw err;
-    }
-
-    var workLogPromises = data.issues.map( (issue) => {
-        var workLogPromise = getWorkLogPromise(issue.key);
-        return workLogPromise.then((worklogsResp) => {
-            return {
-                key: issue.key, summary: issue.fields.summary,
-                item: issue, worklogs: JSON.stringify(worklogsResp.worklogs)
-            }
-        })
-    });
-
-    Promise.all(workLogPromises).then((results) => console.dir(results))
-
-});

@@ -1,4 +1,6 @@
 module.exports = {
-  "userName": "drykovanov",
-  "password": "analog10encoder",
+    jira: {
+        "userName": "drykovanov",
+        "password": "analog10encoder"
+    }
 };

@@ -47,6 +47,12 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
+
+# idea
+
+.idea
+*.iml
+
 # project specific
 
-config.local.json
+config.local.js
