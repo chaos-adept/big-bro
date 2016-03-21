@@ -56,3 +56,4 @@ jspm_packages
 # project specific
 
 config.local.js
+time*.xlsx

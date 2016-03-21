@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "generate:yesterday": "node index.js --cmd=yesterday",
+    "generate:previous-week": "node index.js --cmd=prevWeek",
+    "generate:today": "node index.js --cmd=today",
+    "generate:week": "node index.js  --cmd=week"
   },
   "repository": {
     "type": "git",
