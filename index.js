@@ -1,4 +1,5 @@
 //thanks to https://github.com/B-Stefan/node-jira-worklog-export
+const _ = require('lodash');
 const moment = require('moment');
 const argvToRepDate = require('./lib/utils').argvToRepDate;
 const adjustWorkingTime = require('./lib/utils').adjustWorkingTime;
@@ -12,6 +13,12 @@ var startDate, endDate;
 function writeReport(dates) {
     generateReport(dates).then((result) => {
         console.dir(result.summary);
+        _.each(result.details, (items, author) => {
+            console.log(author);
+            _.each(items, (item) => {
+                console.log('  ',`${item.started.format(config.reportDateFormat)} | ${ _.padStart(item.timeSpent, 10)} | ${item.issue.key} | ${_.truncate(item.comment.replace(/\n/g, ' '), {length: 70})} `);
+            });
+        });
 
         var filename = `time-${dates.startDate.format(config.repFileNameDate)}—to—${dates.endDate.format(config.repFileNameDate)}`;
         writeExcelReport(filename, result)
@@ -22,16 +29,18 @@ function reportForDay(startDate) {
     var endDate = startDate.clone();
     endDate.add(1, 'd');
     writeReport({
-        startDate:  adjustWorkingTime(startDate),
-        endDate:    adjustWorkingTime(endDate)});
+        startDate: adjustWorkingTime(startDate),
+        endDate: adjustWorkingTime(endDate)
+    });
 }
 
 function reportForDuration(startDate, endDate) {
     var shftEndDate = endDate.clone();
     shftEndDate.add(1, 'd');
     writeReport({
-        startDate:  adjustWorkingTime(startDate),
-        endDate:    adjustWorkingTime(shftEndDate)});
+        startDate: adjustWorkingTime(startDate),
+        endDate: adjustWorkingTime(shftEndDate)
+    });
 }
 
 function reportToday() {
@@ -56,7 +65,7 @@ function reportPrevWeek() {
 switch (argv.cmd) {
     case 'day':
         startDate = argvToRepDate(argv.day);
-        reportForDay(startDates);
+        reportForDay(startDate);
         break;
     case 'period':
         startDate = argvToRepDate(argv.startDate);
