@@ -11,6 +11,8 @@ var startDate, endDate;
 
 function writeReport(dates) {
     generateReport(dates).then((result) => {
+        console.dir(result.summary);
+
         var filename = `time-${dates.startDate.format(config.repFileNameDate)}—to—${dates.endDate.format(config.repFileNameDate)}`;
         writeExcelReport(filename, result)
     });
