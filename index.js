@@ -12,10 +12,11 @@ var startDate, endDate;
 
 function writeReport(dates) {
     generateReport(dates).then((result) => {
-        console.dir(result.summary);
+        result.summary.map((item) => console.log(_.padEnd(item.author, 20), _.padEnd(item.sum, 3)) );
+        console.log('---');
         _.each(result.details, (items, author) => {
             console.log(author);
-            _.each(items, (item) => {
+            _.each(_.sortBy(items, (i) => i.started ), (item) => {
                 console.log('  ',`${item.started.format(config.reportDateFormat)} | ${ _.padStart(item.timeSpent, 10)} | ${item.issue.key} | ${_.truncate(item.comment.replace(/\n/g, ' '), {length: 70})} `);
             });
         });
