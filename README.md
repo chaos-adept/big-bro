@@ -1,7 +1,8 @@
 Big Brother
 =================
-for more information about project name refer to [Big Brother (Nineteen Eighty-Four)](https://en.wikipedia.org/wiki/Big_Brother_%28Nineteen_Eighty-Four%29)
+a tool for generation time reports by fetching jira workLog items over rest.
 
+project name recall to [Big Brother (Nineteen Eighty-Four)](https://en.wikipedia.org/wiki/Big_Brother_%28Nineteen_Eighty-Four%29)
 ![big bro](https://upload.wikimedia.org/wikipedia/en/f/fe/Telescreen.png)
 
 
@@ -34,16 +35,16 @@ module.exports = {
 ```
 
 
-# usage
+# report generation
 
-## generate for today
+## today
     npm run generate:today
 
-## generate for this week
+## this week
     npm run generate:week
 
-## generate for this yesterday
+## yesterday
     npm run generate:yesterday
 
-## generate for this previous week
+## previous week
     npm run generate:previous-week
