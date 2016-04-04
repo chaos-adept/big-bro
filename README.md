@@ -48,3 +48,7 @@ module.exports = {
 
 ## previous week
     npm run generate:previous-week
+
+## day
+
+    npm run generate:day <YYYY/MM/DD>

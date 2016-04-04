@@ -65,6 +65,7 @@ function reportPrevWeek() {
 
 switch (argv.cmd) {
     case 'day':
+        console.log(`generate for day ${argv.day}`);
         startDate = argvToRepDate(argv.day);
         reportForDay(startDate);
         break;
