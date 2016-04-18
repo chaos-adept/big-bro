@@ -52,3 +52,8 @@ module.exports = {
 ## day
 
     npm run generate:day <YYYY/MM/DD>
+
+
+## period
+
+    npm --cmd=period --startDate=<YYYY/MM/DD> --endDate=<YYYY/MM/DD>

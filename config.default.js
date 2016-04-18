@@ -10,6 +10,12 @@ module.exports = {
     },
     cmdArgDateFormat: "YYYY/MM/DD HH:mm",
     reportDateFormat: "YY/MM/DD HH:mm",
-    repFileNameDate: "YY-MM-DD_HH-mm",
-    startWorkingHour: 8
+    repFileNameDateFormat: "YY-MM-DD_HH-mm",
+    startWorkingHour: 8,
+    issueChunkSize: 256,
+    issueChunkDelay: 1000,
+    reporters: [
+        './lib/excel-report-writter',
+        './lib/console-report-writter'
+    ]
 };

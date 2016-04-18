@@ -24,14 +24,12 @@
   "homepage": "https://github.com/chaos-adept/big-bro#readme",
   "dependencies": {
     "bluebird": "^3.3.4",
-    "jira": "git://github.com/B-Stefan/node-jira.git",
+    "jira": "git://github.com/chaos-adept/node-jira",
     "lodash": "^4.6.1",
     "mime": "^1.3.4",
     "moment": "^2.12.0",
     "node-jira-worklog-export": "^1.0.0",
-    "optimist": "^0.6.1"
-  },
-  "devDependencies": {
+    "optimist": "^0.6.1",
     "msexcel-builder": "0.0.2"
   }
 }
