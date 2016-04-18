@@ -15,7 +15,6 @@ module.exports = {
     issueChunkSize: 256,
     issueChunkDelay: 1000,
     reporters: [
-        './lib/excel-report-writter',
         './lib/console-report-writter'
     ]
 };
