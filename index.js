@@ -6,6 +6,8 @@ const adjustWorkingTime = require('./lib/utils').adjustWorkingTime;
 const config = require('./lib/config-utils');
 const argv = require('optimist').argv;
 const generateReport = require('./lib/generate-report');
+const log4js = require('log4js');
+log4js.configure('log4js_configuration.json');
 
 var startDate, endDate;
 

@@ -1,0 +1,11 @@
+{
+  "appenders": [
+    {
+      "type": "file",
+      "absolute": false,
+      "filename": "big-bro.log",
+      "maxLogSize": 20480,
+      "backups": 10
+    }
+  ]
+}
