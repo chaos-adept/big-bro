@@ -56,4 +56,4 @@ module.exports = {
 
 ## period
 
-    npm --cmd=period --startDate=<YYYY/MM/DD> --endDate=<YYYY/MM/DD>
+    npm run start --cmd=period --startDate=<YYYY/MM/DD> --endDate=<YYYY/MM/DD>
