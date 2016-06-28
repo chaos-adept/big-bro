@@ -57,3 +57,8 @@ module.exports = {
 ## period
 
     npm run start --cmd=period --startDate=<YYYY/MM/DD> --endDate=<YYYY/MM/DD>
+
+## progress based on estimations and spent time
+
+    npm run progress:query -- "--query=<jql>"
+sample `npm run progress:query -- "--query=project = 'as' AND component = 'admin ui' and statusCategory != Done"`

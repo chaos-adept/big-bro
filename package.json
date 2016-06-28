@@ -10,7 +10,8 @@
     "generate:previous-week": "node index.js --cmd=prevWeek",
     "generate:today": "node index.js --cmd=today",
     "generate:week": "node index.js  --cmd=week",
-    "generate:day": "node index.js  --cmd=day --day"
+    "generate:day": "node index.js  --cmd=day --day",
+    "progress:query": "node index.js --cmd=query"
   },
   "repository": {
     "type": "git",

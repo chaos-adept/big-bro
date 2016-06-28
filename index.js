@@ -1,3 +1,5 @@
+'use strict';
+
 //thanks to https://github.com/B-Stefan/node-jira-worklog-export
 const _ = require('lodash');
 const moment = require('moment');
@@ -57,6 +59,11 @@ function reportPrevWeek() {
         moment().endOf('isoWeek').subtract(1, 'w'));
 }
 
+function reportProgressByQuery(query) {
+    require('./lib/generate-progress-report')(query);
+
+}
+
 switch (argv.cmd) {
     case 'day':
         console.log(`generate for day ${argv.day}`);
@@ -79,6 +86,9 @@ switch (argv.cmd) {
         break;
     case 'week':
         reportWeek();
+        break;
+    case 'query':
+        reportProgressByQuery(argv.query);
         break;
     case undefined:
         console.error(`cmd argument must be specified`);
