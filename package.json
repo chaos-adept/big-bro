@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
+    "setup:local-config": "node index.js --cmd=setup-local-config",
     "generate:yesterday": "node index.js --cmd=yesterday",
     "generate:previous-week": "node index.js --cmd=prevWeek",
     "generate:today": "node index.js --cmd=today",

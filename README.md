@@ -8,6 +8,14 @@ project name recall to [Big Brother (Nineteen Eighty-Four)](https://en.wikipedia
 
 # install
 * install nodejs from [nodejs official site](https://nodejs.org/en/)
+
+tool based way (recommended)
+* run `npm i`
+* run `npm run setup:local-config -- --user=<user> --password=<password>`
+
+  sample `npm run setup:local-config -- --user=avaserman --password=verysecreetpasswordhere123`
+
+manual way
 * run `npm i`
 * copy `config.local.sample.js` to `config.local.js`
 * edit jira user account in `config.local.js`

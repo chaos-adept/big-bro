@@ -5,10 +5,12 @@ const _ = require('lodash');
 const moment = require('moment');
 const argvToRepDate = require('./lib/utils').argvToRepDate;
 const adjustWorkingTime = require('./lib/utils').adjustWorkingTime;
-const config = require('./lib/config-utils');
+const configUtils = require('./lib/config-utils');
 const argv = require('optimist').argv;
 const generateReport = require('./lib/generate-report');
 const log4js = require('log4js');
+const assert = require('assert');
+
 log4js.configure('log4js_configuration.json');
 
 var startDate, endDate;
@@ -16,6 +18,7 @@ var startDate, endDate;
 function writeReport(dates) {
     generateReport(dates).then((result) => {
         var options = { dates, result };
+        const config = configUtils.loadConfig();
         for (var writeReport of config.reporters.map( (module) => require(module) )) {
             writeReport(options);
         }
@@ -61,7 +64,12 @@ function reportPrevWeek() {
 
 function reportProgressByQuery(query) {
     require('./lib/generate-progress-report')(query);
+}
 
+function generateLocalConfig() {
+    assert(argv.user, 'jira user should be defined');
+    assert(argv.password, 'jira password should be defined');
+    configUtils.makeDefaultConfig(argv.user, argv.password);
 }
 
 switch (argv.cmd) {
@@ -89,6 +97,9 @@ switch (argv.cmd) {
         break;
     case 'query':
         reportProgressByQuery(argv.query);
+        break;
+    case 'setup-local-config':
+        generateLocalConfig();
         break;
     case undefined:
         console.error(`cmd argument must be specified`);
