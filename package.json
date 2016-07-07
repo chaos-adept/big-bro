@@ -34,6 +34,7 @@
     "msexcel-builder": "0.0.2"
   },
   "devDependencies": {
+    "emailjs": "^1.0.5",
     "log4js": "^0.6.35"
   }
 }

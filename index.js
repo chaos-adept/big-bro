@@ -17,9 +17,9 @@ var startDate, endDate;
 
 function writeReport(dates) {
     generateReport(dates).then((result) => {
-        var options = { dates, result };
+        var options = {dates, result};
         const config = configUtils.loadConfig();
-        for (var writeReport of config.reporters.map( (module) => require(module) )) {
+        for (var writeReport of config.reporters.map((module) => require(module))) {
             writeReport(options);
         }
     });
