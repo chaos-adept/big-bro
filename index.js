@@ -15,9 +15,9 @@ log4js.configure('log4js_configuration.json');
 
 var startDate, endDate;
 
-function writeReport(dates) {
-    generateReport(dates).then((result) => {
-        var options = {dates, result};
+function writeReport(input) {
+    generateReport(input.dates).then((result) => {
+        var options = Object.assign(input, { result });
         const config = configUtils.loadConfig();
         for (var writeReport of config.reporters.map((module) => require(module))) {
             writeReport(options);
@@ -25,41 +25,47 @@ function writeReport(dates) {
     });
 }
 
-function reportForDay(startDate) {
+function reportForDay(startDate, stereotype) {
     var endDate = startDate.clone();
     endDate.add(1, 'd');
     writeReport({
-        startDate: adjustWorkingTime(startDate),
-        endDate: adjustWorkingTime(endDate)
+        dates: {
+            startDate: adjustWorkingTime(startDate),
+            endDate: adjustWorkingTime(endDate)
+        },
+        stereotype
     });
 }
 
-function reportForDuration(startDate, endDate) {
+function reportForDuration(startDate, endDate, stereotype) {
     var shftEndDate = endDate.clone();
     shftEndDate.add(1, 'd');
     writeReport({
         startDate: adjustWorkingTime(startDate),
-        endDate: adjustWorkingTime(shftEndDate)
+        endDate: adjustWorkingTime(shftEndDate),
+        stereotype
     });
 }
 
 function reportToday() {
-    reportForDay(moment());
+    reportForDay(moment(), 'today');
 }
 
 function reportYesterday() {
     var yesterday = moment().subtract(1, 'd');
-    reportForDay(yesterday);
+    reportForDay(yesterday, 'yesterday');
 }
 
 function reportWeek() {
-    reportForDuration(moment().startOf('isoWeek'), moment().endOf('isoWeek'));
+    reportForDuration(moment().startOf('isoWeek'), moment().endOf('isoWeek'), 'this week');
 }
 
 function reportPrevWeek() {
     reportForDuration(
         moment().startOf('isoWeek').subtract(1, 'w'),
-        moment().endOf('isoWeek').subtract(1, 'w'));
+        moment().endOf('isoWeek').subtract(1, 'w'),
+        'prev. week'
+    );
 }
 
 function reportProgressByQuery(query) {
