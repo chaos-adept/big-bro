@@ -41,8 +41,10 @@ function reportForDuration(startDate, endDate, stereotype) {
     var shftEndDate = endDate.clone();
     shftEndDate.add(1, 'd');
     writeReport({
-        startDate: adjustWorkingTime(startDate),
-        endDate: adjustWorkingTime(shftEndDate),
+        dates: {
+            startDate: adjustWorkingTime(startDate),
+            endDate: adjustWorkingTime(shftEndDate)
+        },
         stereotype
     });
 }
