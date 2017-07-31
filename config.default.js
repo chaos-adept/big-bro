@@ -14,6 +14,7 @@ module.exports = {
     startWorkingHour: 8,
     issueChunkSize: 256,
     issueChunkDelay: 1000,
+    issueFetchAttemptCount: 5,
     reporters: [
         './lib/console-report-writter'
     ]

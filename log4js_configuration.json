@@ -4,7 +4,7 @@
       "type": "file",
       "absolute": false,
       "filename": "big-bro.log",
-      "maxLogSize": 20480,
+      "maxLogSize": 120480,
       "backups": 10
     }
   ]
