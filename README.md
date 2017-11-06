@@ -12,9 +12,9 @@ project name recall to [Big Brother (Nineteen Eighty-Four)](https://en.wikipedia
 
 tool based way (recommended)
 * run `npm i`
-* run `npm run setup:local-config -- --user=<user> --password=<password>`
+* run `npm run setup:local-config -- --user=<user> --password=<password> --host=<host> --projectKeys=<keys>`
 
-  sample `npm run setup:local-config -- --user=avaserman --password=verysecreetpasswordhere123`
+  sample `npm run setup:local-config -- --user=avaserman --password=verysecreetpasswordhere123 --host=jira.domain.com --projectKeys=AP,DO,KL`
 
 manual way
 * run `npm i`

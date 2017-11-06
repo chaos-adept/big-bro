@@ -2,15 +2,15 @@ module.exports = {
     jira: {
         "userName": "ENTER JIRA USER",
         "password": "ENTER JIRA PASSWORD"
+        //"protocol": "https"
+        //projectKey: ["AS", "WPPAP"] // project samples
     },
     /*
-    //optional if you use smpt writer
-
-    reporters: [
+    reporters: [ //reporters could be found in the ./lib/*-writer
         './lib/console-report-writter',
         './lib/email-report-writer'
     ],
-    "email-report-writer": {
+    "email-report-writer": { //optional if you use `email-report-writer`
         smpt: {
             user: "ENTER SMPT USER",
             password: "ENTER SMPT PASSWORD",

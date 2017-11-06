@@ -1,7 +1,7 @@
 module.exports = {
     jira: {
         "protocol": "https",
-        "host": "jira.wiley.ru",
+        "host": "",
         "apiVersion": "2",
         "projectKey": "as",
         "maxIssueResults": 10000,

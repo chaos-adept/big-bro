@@ -75,9 +75,11 @@ function reportProgressByQuery(query) {
 }
 
 function generateLocalConfig() {
-    assert(argv.user, 'jira user should be defined');
-    assert(argv.password, 'jira password should be defined');
-    configUtils.makeDefaultConfig(argv.user, argv.password);
+    assert(argv.user, 'jira `user` should be defined');
+    assert(argv.password, 'jira `password` should be defined');
+    assert(argv.host, 'jira `host` should be defined in the format like - `domain.com`');
+    assert(argv.projectKeys, 'jira `projectKeys` should be defined in the format like - `AS,WPPAP`');
+    configUtils.makeDefaultConfig(argv);
 }
 
 switch (argv.cmd) {
