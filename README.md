@@ -3,6 +3,7 @@ Big Brother
 a tool for generation time reports by fetching jira workLog items over rest.
 
 project name recall to [Big Brother (Nineteen Eighty-Four)](https://en.wikipedia.org/wiki/Big_Brother_%28Nineteen_Eighty-Four%29)
+
 ![big bro](https://upload.wikimedia.org/wikipedia/en/f/fe/Telescreen.png)
 
 
