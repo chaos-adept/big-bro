@@ -16,6 +16,7 @@ hs_err_pid*
 logs
 *.log
 npm-debug.log*
+*.log.*
 
 # Runtime data
 pids

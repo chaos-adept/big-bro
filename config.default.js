@@ -6,7 +6,7 @@ module.exports = {
         "projectKey": "as",
         "maxIssueResults": 10000,
         "verbose": true,
-        searchDateFormat: "YYYY/MM/DD HH:mm"
+        searchDateFormat: "YYYY/MM/DD"
     },
     cmdArgDateFormat: "YYYY/MM/DD HH:mm",
     reportDateFormat: "YY/MM/DD HH:mm",
