@@ -70,6 +70,14 @@ function reportPrevWeek() {
     );
 }
 
+function reportTwoWeeks() {
+    reportForDuration(
+        moment().startOf('isoWeek').subtract(2, 'w'),
+        moment().endOf('isoWeek').subtract(1, 'w'),
+        'two week ago'
+    );
+}
+
 function reportProgressByQuery(query) {
     require('./lib/generate-progress-report')(query);
 }
@@ -101,6 +109,9 @@ switch (argv.cmd) {
         break;
     case 'prevWeek':
         reportPrevWeek();
+        break;
+    case 'twoWeeks':
+        reportTwoWeeks();
         break;
     case 'week':
         reportWeek();

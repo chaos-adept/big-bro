@@ -9,6 +9,7 @@
     "test": "./node_modules/.bin/mocha --reporter spec",
     "generate:yesterday": "node index.js --cmd=yesterday",
     "generate:previous-week": "node index.js --cmd=prevWeek",
+    "generate:two-weeks": "node index.js --cmd=twoWeeks",
     "generate:today": "node index.js --cmd=today",
     "generate:week": "node index.js  --cmd=week",
     "generate:day": "node index.js  --cmd=day --day",
